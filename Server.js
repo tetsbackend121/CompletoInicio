@@ -40,32 +40,15 @@ const Mensaje = mongoose.model("Mensaje", mensajeSchema, "Mensajes");
 const storage = multer.memoryStorage(); // Almacenamiento en memoria para leer los datos del archivo como Buffer
 const upload = multer({ storage: storage });
 
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+
 app.use(bodyParser.json({ limit: '10000mb' })); // Aumenta el límite de carga útil a 10 megabytes
+app.use(express.static('public'));
 
-app.get('/', async (req, res) => {
-
-    const filePath = path.join(__dirname, 'public', 'index.html');
-    
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-
-
-        console.log('Error al leer el archivo de bienvenida:', err);
-        res.status(500).send('Error interno del servidor');
-        return;
-        }
-
-        res.send(data)
-    })
-
-    
-
-
-
-
+// Ruta para renderizar una plantilla
+app.get('/', (req, res) => {
+  res.render('index'); // Renderiza la plantilla 'index'
 });
 
 app.post('/registro', (req, res) => {

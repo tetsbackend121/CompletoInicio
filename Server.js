@@ -57,9 +57,11 @@ app.get('/', async (req, res) => {
         res.status(500).send('Error interno del servidor');
         return;
         }
+
+        res.send(data)
     })
 
-    res.send(data)
+    
 
 
 

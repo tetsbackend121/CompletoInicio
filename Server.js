@@ -45,6 +45,27 @@ app.use(express.json());
 
 app.use(bodyParser.json({ limit: '10000mb' })); // Aumenta el límite de carga útil a 10 megabytes
 
+app.get('/', async (req, res) => {
+
+    const filePath = path.join(__dirname, 'public', 'index.html');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+
+
+        console.log('Error al leer el archivo de bienvenida:', err);
+        res.status(500).send('Error interno del servidor');
+        return;
+        }
+    })
+
+    res.send(data)
+
+
+
+
+});
+
 app.post('/registro', (req, res) => {
     const { username, password } = req.body;
     try {
